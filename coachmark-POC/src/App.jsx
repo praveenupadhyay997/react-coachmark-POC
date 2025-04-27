@@ -8,6 +8,7 @@ const App = () => {
   const [run, setRun] = useState(false)
   const [stepIndex, setStepIndex] = useState(0)
   const [spotlightStyle, setSpotlightStyle] = useState(null)
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0 })
 
   const steps = [
     {
@@ -17,6 +18,8 @@ const App = () => {
       placement: 'bottom',
       disableBeacon: true,
       spotlightRadius: 100,
+      tooltipOffset: 100,
+      leftArrow: '10%'  // Percentage left position for the arrow
     },
     {
       target: '.item-2',
@@ -25,14 +28,18 @@ const App = () => {
       placement: 'bottom',
       disableBeacon: true,
       spotlightRadius: 70,
+      tooltipOffset: 50,
+      leftArrow: '30%'  // Percentage left position for the arrow
     },
     {
       target: '.item-3',
       content: "Here's the third item.",
       title: 'Item 3',
-      placement: 'bottom',
+      placement: 'top',
       disableBeacon: true,
       spotlightRadius: 60,
+      tooltipOffset: 50,
+      leftArrow: '20%'  // Percentage left position for the arrow
     },
     {
       target: '.item-4',
@@ -41,6 +48,8 @@ const App = () => {
       placement: 'top',
       disableBeacon: true,
       spotlightRadius: 90,
+      tooltipOffset: -400,
+      leftArrow: '10%'  // Percentage left position for the arrow
     },
     {
       target: '.item-5',
@@ -49,8 +58,10 @@ const App = () => {
       placement: 'top',
       disableBeacon: true,
       spotlightRadius: 80,
-    },
-  ]
+      tooltipOffset: -400,
+      leftArrow: '20%'  // Percentage left position for the arrow
+    }
+  ]  
 
   useEffect(() => {
     setRun(true)
@@ -64,10 +75,16 @@ const App = () => {
     if (el) {
       const rect = el.getBoundingClientRect()
       const radius = currentStep.spotlightRadius || 60
+
       setSpotlightStyle({
         top: rect.top + rect.height / 2 - radius,
         left: rect.left + rect.width / 2 - radius,
         size: radius * 2,
+      })
+
+      // set tooltip top based on step-specific offset
+      setTooltipPosition({
+        top: rect.top + rect.height + (currentStep.tooltipOffset || 20),
       })
     }
   }, [stepIndex])
@@ -111,15 +128,29 @@ const App = () => {
         scrollOffset={100}
         disableScrolling={true}
         callback={handleJoyrideCallback}
-        tooltipComponent={props => (
-          <TourStepContent
+        tooltipComponent={(props) => (
+          <div
             {...props}
-            total={steps.length}
-            onNext={handleNext}
-            onSkip={handleSkip}
-            isLastStep={stepIndex === steps.length - 1}
-          />
-        )}
+            style={{
+              ...props.style,
+              position: 'absolute',
+              top: `${tooltipPosition.top}px`,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 1000,
+              animation: 'tooltipFadeIn 0.3s ease-out'
+            }}
+          >
+            <TourStepContent
+              total={steps.length}
+              onNext={handleNext}
+              onSkip={handleSkip}
+              isLastStep={stepIndex === steps.length - 1}
+              step={props.step}
+              stepIndex={stepIndex}
+            />
+          </div>
+        )}        
         styles={{
           options: {
             overlayColor: 'rgba(0, 0, 0, 0.5)',
@@ -127,6 +158,7 @@ const App = () => {
           },
         }}
       />
+
 
       {run && spotlightStyle && (
         <SpotlightOverlay

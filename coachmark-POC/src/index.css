@@ -163,3 +163,24 @@ body, html {
   color: #00AEEF;
   border: 1px solid #00AEEF;
 }
+
+.__floater.__floater__open {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+/* Add this to your CSS to ensure the default arrow is hidden */
+.__floater__body .__floater__arrow span {
+  display: none !important;
+}
+
+@keyframes tooltipFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
