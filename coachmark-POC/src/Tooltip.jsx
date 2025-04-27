@@ -1,7 +1,7 @@
 import React from 'react'
-import './App.css'
+import './Tooltip.css'
 
-const TourStepContent = ({ stepIndex, total, onNext, onSkip, isLastStep, step }) => {
+const Tooltip = ({ stepIndex, total, onNext, onSkip, isLastStep, step }) => {
   const placement = step.placement || 'bottom'
 
   const arrowStyles = {
@@ -51,4 +51,4 @@ const TourStepContent = ({ stepIndex, total, onNext, onSkip, isLastStep, step })
   )
 }
 
-export default TourStepContent
+export default Tooltip

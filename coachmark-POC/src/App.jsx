@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Joyride, { STATUS } from 'react-joyride'
 import './App.css'
-import TourStepContent from './TourStepContent'
 import SpotlightOverlay from './SpotlightOverlay'
+import Tooltip from './Tooltip'
 
 const App = () => {
   const [run, setRun] = useState(false)
@@ -12,7 +12,7 @@ const App = () => {
 
   const steps = [
     {
-      target: '.item-1',
+      target: '#item-1',
       content: 'This is the first item.',
       title: 'Item 1',
       placement: 'bottom',
@@ -141,7 +141,7 @@ const App = () => {
               animation: 'tooltipFadeIn 0.3s ease-out'
             }}
           >
-            <TourStepContent
+            <Tooltip
               total={steps.length}
               onNext={handleNext}
               onSkip={handleSkip}
@@ -169,7 +169,7 @@ const App = () => {
       )}
 
       <div className="wrapper">
-        <div className="item-1">1</div>
+        <div id="item-1">1</div>
         <div className="item-2">2</div>
         <div className="item-3">3</div>
         <div className="item-4">4</div>
