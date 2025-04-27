@@ -29,7 +29,7 @@ const App = () => {
       disableBeacon: true,
       spotlightRadius: 70,
       tooltipOffset: 50,
-      leftArrow: '30%'  // Percentage left position for the arrow
+      leftArrow: '10%'  // Percentage left position for the arrow
     },
     {
       target: '.item-3',
@@ -38,7 +38,7 @@ const App = () => {
       placement: 'top',
       disableBeacon: true,
       spotlightRadius: 60,
-      tooltipOffset: 50,
+      tooltipOffset: -300,
       leftArrow: '20%'  // Percentage left position for the arrow
     },
     {
